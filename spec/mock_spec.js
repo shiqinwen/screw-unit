@@ -21,8 +21,57 @@ Screw.Unit(function() {
         });
         
         it("should fire the browser click event", function () {
-            TH.click(jQuery("#click_tester"));
+            TH.click(jQuery("#click_tester")[0]);
             expect(clickReceived).to(be_true);
+        });        
+    });
+    
+    describe("TH.Ajax", function () {
+        var response;
+        before(function () {
+            TH.Ajax.mock("/a_url", "someText", 200);
+        });
+        
+        it("should send the response you added to the onComplete function", function () {
+            var ajx = new Ajax.Request("/a_url", {
+                onComplete: function (resp) { response = resp }
+            });
+            expect(response.responseText).to(equal, "someText");
+        });
+        
+        it("should send the response you added to the onSuccess function when the response is a 200", function () {
+            var ajx = new Ajax.Request("/a_url", {
+                onSuccess: function (resp) { response = resp }
+            });
+            expect(response.responseText).to(equal, "someText");
+        });
+        
+        it("should send the response to onFailure when the response is not a 200", function () {
+            TH.Ajax.mock("/a_url", "someText", 400);
+            var ajx = new Ajax.Request("/a_url", {
+                onFailure: function (resp) { response = resp }
+            });
+            expect(response.responseText).to(equal, "someText");
+        });
+        
+        it("should raise when you call an unmocked ajax url", function () {
+            var raised = false;
+            try {
+                var ajx = new Ajax.Request("/a_different_url");
+            } catch (e) {
+                raised = true;
+            }
+            expect(raised).to(be_true);
+        });
+        
+        it("(will fail without prototype) should do responseJSON when the response is JSON", function () {
+            TH.Ajax.mock("/a_url", "{'foo': 'bar'}", 200);
+            var ajx = new Ajax.Request("/a_url", {
+                onComplete: function (resp) { response = resp }
+            });
+            console.dir(response);
+            console.dir(eval(response.responseText));
+            expect(response.responseJSON.foo).to(equal, 'bar');
         });
         
     });
