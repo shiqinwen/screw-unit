@@ -3,6 +3,8 @@ This fork adds mocking support for your javascript tests
 * insert DOM mocks for each test
 * Mock out Prototype.js AJAX calls using a simple interface
 * JSDoc Toolkit docs (in /mock_docs/index.html)
+
+Docs online at:  [http://toppingdesign.com/mock_docs/](http://toppingdesign.com/mock_docs/)
     
     examples:
         // DOM mocking
