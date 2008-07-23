@@ -1,3 +1,30 @@
+This fork adds mocking support for your javascript tests
+* Mock out objects (and have them restored at the next test)
+* insert DOM mocks for each test
+* Mock out Prototype.js AJAX calls using a simple interface
+* JSDoc Toolkit docs (in /mock_docs/index.html)
+    
+    examples:
+        // DOM mocking
+        TH.insertDomMock("some_mock"); // will insert dom_mocks/some_mock.html into <div id="dom_test"></div>
+        
+        // Object mocking
+        var someObj = {
+            foo: function () { return 'bar' }
+        };
+        someObj.foo() == 'bar';
+        TH.Mock.Obj("someObj", {
+            foo: function () { return 'somethingElse' }
+        });
+        someObj.foo() == 'somethingElse'; // BUT!  Only for this test the next test will have a normal someObj;
+        
+        // Ajax mocking (Prototype.js only)
+        TH.Ajax.mock("/a_url", "someText", 200);
+        var ajx = new Ajax.Request("/a_url", {
+            onComplete: function (resp) { response = resp }
+        });
+        expect(response.responseText).to(equal, "someText");
+
 Screw.Unit is a Behavior-Driven Testing Framework for Javascript. It features nested describes. Its goals are to provide:
 
 * a DSL for elegant, readable, organized specs;
