@@ -57,9 +57,8 @@
             // Here is a use of the custom matcher defined above.
             expect(foo()).to(be_even);
           });
-          // Here is a use the to_not version of the custom matcher
           it("is not even when you add 1", function() {
-            // Here is a use of the custom matcher defined above.
+            // Here is a use the to_not version of the same.
             expect(foo() + 1).to_not(be_even);
           });
         });
