@@ -48,6 +48,12 @@
       Screw.Unit(function() {
         // Tests are organized into 'describes' and 'its', following the style of RSpec.
         describe("foo.number", function() {
+          // this [before] function is run before every test
+          before(function() {
+            // restore all objects that were mocked to their original states;
+            TH.Mock.reset();
+          });
+          
           it("returns 2", function() {
             // 'equal' is one among many matchers provided with the Screw.Unit distribution. It
             // is smart enough to compare arrays, objects, and primitives.
@@ -62,6 +68,12 @@
             TH.Mock.obj("foo", { number: 3 });
             expect(foo.number).to_not(be_even);
           });
+          
+          it("is even in the next test because the mock was restored", function() {
+            // since the before function restored the mocked objects, foo has returned to normal
+            expect(foo.number).to(be_even);
+          });
+          
         });
       });
     </script>
