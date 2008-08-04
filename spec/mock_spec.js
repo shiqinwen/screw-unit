@@ -69,8 +69,6 @@ Screw.Unit(function() {
             var ajx = new Ajax.Request("/a_url", {
                 onComplete: function (resp) { response = resp }
             });
-            console.dir(response);
-            console.dir(eval(response.responseText));
             expect(response.responseJSON.foo).to(equal, 'bar');
         });
         
@@ -108,10 +106,40 @@ Screw.Unit(function() {
             return publicObj;
         })();
         
+        // global scope
+        nestedObject = {
+            someObj: {
+                foo: 'bar',
+                someOtherObj: {
+                    deepNest: 'bar'
+                }
+            }
+        };
+        
         describe('mocking a function', function () {
             it("should keep the unmocked functions", function () {
                TH.Mock.obj("simpleObject");
                expect(simpleObject.anotherFunction('arbitrary')).to(equal, 'arbitrary'); 
+            });
+            
+            describe('with a nested object', function () {
+                it("should mock the object", function () {
+                    TH.Mock.obj("nestedObject", {
+                        someObj: {
+                            foo: 'different',
+                            someOtherObj: {
+                                deepNest: "different"
+                            }
+                        }
+                    });
+                    expect(nestedObject.someObj.foo).to(equal, 'different');
+                    expect(nestedObject.someObj.someOtherObj.deepNest).to(equal, 'different');
+                });
+                
+                it("should be restored on the next test", function () {
+                    expect(nestedObject.someObj.foo).to(equal, 'bar');
+                    expect(nestedObject.someObj.someOtherObj.deepNest).to(equal, 'bar');
+                });
             });
             
             describe('with a simple object', function () {
