@@ -5,6 +5,7 @@
 * If you want to skip multiple tests, the before can do the skip.
 
 Examples:
+
           it('should be skipped if the browser is IE', function(me){
             if(this_browser_is_IE){
               skip(me).because('IE doesn't have some function I am testing, and failed tests make me curl up on the floor and cry');
