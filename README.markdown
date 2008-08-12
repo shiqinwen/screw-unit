@@ -1,3 +1,30 @@
+This fork adds asynchronous testing:
+* A jQuery object representing the current test's dom element is now passed to "it" functions
+* Asynchronous testing functions are tracked and displayed with overall status, which updates as tests complete
+* Nested asynchronous testing
+
+    examples:
+        it('tests something after 3 seconds', function(me){
+          var x = false;
+          setTimeout(some_magic_function, 1000);
+          using(me).wait(3).and_then(function(){
+            expect(x).to(be_true);
+          });
+        })
+
+        it('tests something after 3 seconds, and something else 3 seconds after that', function(me){
+          var x = false;
+          setTimeout(some_magic_function, 1000);
+          using(me).wait(3).and_then(function(){
+            expect(x).to(be_true);
+            setTimeout(some_other_magic_function, 1000);
+            using(me).wait(3).and_then(function(){
+              expect(x).to(be_true);
+            });
+          });
+        })
+
+
 This fork adds mocking support for your javascript tests
 * Mock out objects (and have them restored at the next test)
 * insert DOM mocks for each test
