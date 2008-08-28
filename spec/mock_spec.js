@@ -26,6 +26,27 @@ Screw.Unit(function() {
         });        
     });
     
+    describe("TH.setTimeout", function () {
+        
+        it("should force setTimeout to execute immediately", function () {
+            TH.setTimeout.mock();
+            var called = false;
+            setTimeout(function () {
+                called = true;
+            }, 1000);
+            expect(called).to(be_true);
+        });
+        
+        it("should be restored on the next test", function () {
+            var called = false;
+            setTimeout(function () {
+                called = true;
+            }, 1000);
+            expect(called).to(be_false);
+        });
+        
+    });
+    
     describe("TH.Ajax", function () {
         var response;
         before(function () {
