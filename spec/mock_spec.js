@@ -64,7 +64,8 @@ Screw.Unit(function() {
             expect(raised).to(be_true);
         });
         
-        it("(will fail without prototype) should do responseJSON when the response is JSON", function () {
+        it("should do responseJSON when the response is JSON if Prototype is included", function () {
+            if (!window.Prototype){return}
             TH.Ajax.mock("/a_url", "{'foo': 'bar'}", 200);
             var ajx = new Ajax.Request("/a_url", {
                 onComplete: function (resp) { response = resp }
