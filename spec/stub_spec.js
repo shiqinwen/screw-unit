@@ -27,7 +27,7 @@ Screw.Unit(function() {
             obj = (function() {
               self = {};
               var private = 'hello';
-              self.pizza = function() { return private };
+              self.pizza = function() { return private; };
               return self;
             })();
             var expected = obj.pizza();
