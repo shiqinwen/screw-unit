@@ -13,13 +13,13 @@ Screw.Unit(function() {
         
         it("accepts a return value", function() {
             var ret = "hello";
-            obj.stub("pizza").and_return(ret);
+            obj.stub("pizza").andReturn(ret);
             expect(obj.pizza()).to(equal, ret);
         });
 
         it("stubs over stubs", function() {
-            obj.stub("pizza").and_return("cheese");
-            obj.stub("pizza").and_return("sausage");
+            obj.stub("pizza").andReturn("cheese");
+            obj.stub("pizza").andReturn("sausage");
             expect(obj.pizza()).to(equal, "sausage");
         });
 
