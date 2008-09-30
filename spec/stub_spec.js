@@ -49,6 +49,20 @@ Screw.Unit(function() {
                 Screw.Stub.shouldReceive(obj, "pizza").andReturn("hey");
                 expect(obj.pizza()).to(equal, "hey");
             });
+
+            it("resets", function() {
+                obj = (function() {
+                  self = {};
+                  var private = 'hello';
+                  self.pizza = function() { return private; };
+                  return self;
+                })();
+                var expected = obj.pizza();
+
+                Screw.Stub.shouldReceive(obj, "pizza");
+                Screw.Stub.reset();
+                expect(obj.pizza()).to(equal, expected);
+            });
         });
     });
 });
