@@ -8,19 +8,19 @@ Screw.Unit(function() {
 
         describe(".stub", function() {
             it("returns null for stubbed methods", function() {
-                obj.stub("pizza");
+                Screw.Stub.stub(obj, "pizza");
                 expect(obj.pizza()).to(equal, null);
             });
             
             it("accepts a return value", function() {
                 var ret = "hello";
-                obj.stub("pizza").andReturn(ret);
+                Screw.Stub.stub(obj, "pizza").andReturn(ret);
                 expect(obj.pizza()).to(equal, ret);
             });
 
             it("stubs over stubs", function() {
-                obj.stub("pizza").andReturn("cheese");
-                obj.stub("pizza").andReturn("sausage");
+                Screw.Stub.stub(obj, "pizza").andReturn("cheese");
+                Screw.Stub.stub(obj, "pizza").andReturn("sausage");
                 expect(obj.pizza()).to(equal, "sausage");
             });
 
@@ -33,7 +33,7 @@ Screw.Unit(function() {
                 })();
                 var expected = obj.pizza();
 
-                obj.stub("pizza");
+                Screw.Stub.stub(obj, "pizza");
                 Screw.Stub.reset();
                 expect(obj.pizza()).to(equal, expected);
             });
