@@ -50,6 +50,18 @@ Screw.Unit(function() {
                 expect(obj.pizza()).to(equal, "hey");
             });
 
+            it("expects to be called once", function() {
+                var raised = false;
+                Screw.Stub.shouldReceive(obj, "pizza");
+                try {
+                  obj.pizza.validate();
+                } catch(e) {
+                  raised = true;
+                };
+                expect(raised).to(equal, true);
+                obj.pizza(); // Call so that we don't fail
+            });
+
             it("resets", function() {
                 obj = (function() {
                   self = {};
