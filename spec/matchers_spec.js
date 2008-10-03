@@ -233,5 +233,41 @@ Screw.Unit(function() {
       });
     });
 
+    describe("#raise", function() {
+      var raises = function() { throw "up" };
+      var not_raise = function() { return 'hello' };
+
+      it("matches functions that raise an error", function() {
+        expect(raises).to(raise);
+      });
+
+      it("does not match functions that do not raise an error", function() {
+        expect(not_raise).to_not(raise);
+      });
+
+      describe(".failure_message", function() {
+        it("prints 'expected [actual] to (not) raise an error", function() {
+          var message = '';
+          try { expect(not_raise).to(raise) } catch(e) { message = e };
+          expect(message).to(equal, 'expected function () to raise an error');
+
+          var message = '';
+          try { expect(raises).to_not(raise) } catch(e) { message = e };
+          expect(message).to(equal, 'expected function () to not raise an error');
+        });
+      });
+/*
+      describe(".failure_message", function() {
+        it("prints 'expected [actual] to (not) be true", function() {
+          var message = true;
+          try { expect(false).to(be_true) } catch(e) { message = e }
+          expect(message).to(equal, 'expected false to be true');
+
+          try { expect(true).to_not(be_true) } catch(e) { message = e }
+          expect(message).to(equal, 'expected true to not be true');
+        });
+      });
+*/
+    });
   });
 });
