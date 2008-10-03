@@ -54,12 +54,25 @@ Screw.Unit(function() {
                 var raised = false;
                 Screw.Stub.shouldReceive(obj, "pizza");
                 try {
-                  obj.pizza.validate();
+                    obj.pizza.validate();
                 } catch(e) {
-                  raised = true;
+                    raised = true;
                 };
                 expect(raised).to(equal, true);
-                obj.pizza(); // Call so that we don't fail
+            });
+
+            it("should only validate once", function() {
+                Screw.Stub.shouldReceive(obj, "pizza");
+                try {
+                    obj.pizza.validate();
+                } catch (e) {};
+                var raised = false;
+                try {
+                    obj.pizza.validate();
+                } catch(e) {
+                    raised = true;
+                }
+                expect(raised).to(equal, false);
             });
 
             it("resets", function() {
