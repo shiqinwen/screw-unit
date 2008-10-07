@@ -61,6 +61,14 @@ Screw.Unit(function() {
                 expect(obj.pizza.validate).to(raise, 'expected "pizza" to be called 0 times, but it was called 1 times.');
             });
 
+            it("should only match specified arguments if requested", function() {
+                obj.pizza = function() { return "gross" };
+                Screw.Stub.shouldReceive(obj, "pizza").withArguments("cheese").andReturn("yummy");
+                expect(obj.pizza()).to(equal, "gross");
+                expect(obj.pizza("cheese")).to(equal, "yummy");
+                expect(obj.pizza.validate).to_not(raise);
+            });
+
             it("should only validate once", function() {
                 Screw.Stub.shouldReceive(obj, "pizza");
                 expect(obj.pizza.validate).to(raise);
