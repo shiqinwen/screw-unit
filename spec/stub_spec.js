@@ -51,28 +51,20 @@ Screw.Unit(function() {
             });
 
             it("expects to be called once", function() {
-                var raised = false;
                 Screw.Stub.shouldReceive(obj, "pizza");
-                try {
-                    obj.pizza.validate();
-                } catch(e) {
-                    raised = true;
-                };
-                expect(raised).to(equal, true);
+                expect(obj.pizza.validate).to(raise);
+            });
+
+            it("should be told to expect N calls", function() {
+                Screw.Stub.shouldReceive(obj, "pizza").numberOfTimes(0);
+                obj.pizza();
+                expect(obj.pizza.validate).to(raise, 'expected "pizza" to be called 0 times, but it was called 1 times.');
             });
 
             it("should only validate once", function() {
                 Screw.Stub.shouldReceive(obj, "pizza");
-                try {
-                    obj.pizza.validate();
-                } catch (e) {};
-                var raised = false;
-                try {
-                    obj.pizza.validate();
-                } catch(e) {
-                    raised = true;
-                }
-                expect(raised).to(equal, false);
+                expect(obj.pizza.validate).to(raise);
+                expect(obj.pizza.validate).to_not(raise);
             });
 
             it("resets", function() {
