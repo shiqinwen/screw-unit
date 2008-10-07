@@ -241,12 +241,17 @@ Screw.Unit(function() {
         expect(raises).to(raise);
       });
 
+      it("matches functions with a specific error", function() {
+        var wrapper = function() { expect(raises).to(raise, "down") };
+        expect(wrapper).to(raise);
+      });
+
       it("does not match functions that do not raise an error", function() {
         expect(not_raise).to_not(raise);
       });
 
       describe(".failure_message", function() {
-        it("prints 'expected [actual] to (not) raise an error", function() {
+        it("prints 'expected [actual] to (not) raise an error '[expected]'", function() {
           var message = '';
           try { expect(not_raise).to(raise) } catch(e) { message = e };
           expect(message).to(equal, 'expected function () to raise an error');
@@ -254,6 +259,10 @@ Screw.Unit(function() {
           var message = '';
           try { expect(raises).to_not(raise) } catch(e) { message = e };
           expect(message).to(equal, 'expected function () to not raise an error');
+
+          var message = '';
+          try { expect(raises).to_not(raise, 'up') } catch(e) { message = e };
+          expect(message).to(equal, 'expected function () to not raise an error "up"');
         });
       });
 /*
