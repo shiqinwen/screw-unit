@@ -265,18 +265,6 @@ Screw.Unit(function() {
           expect(message).to(equal, 'expected function () to not raise an error "up"');
         });
       });
-/*
-      describe(".failure_message", function() {
-        it("prints 'expected [actual] to (not) be true", function() {
-          var message = true;
-          try { expect(false).to(be_true) } catch(e) { message = e }
-          expect(message).to(equal, 'expected false to be true');
-
-          try { expect(true).to_not(be_true) } catch(e) { message = e }
-          expect(message).to(equal, 'expected true to not be true');
-        });
-      });
-*/
     });
   });
 });
