@@ -11,14 +11,17 @@
   -->
   <head>
     <!-- These are all of the necessary javascript and css files required to run your tests -->
-    <script src="lib/jquery-1.2.3.js"></script>
-    <script src="lib/jquery.fn.js"></script>
-    <script src="lib/jquery.print.js"></script>
-    <script src="lib/screw.builder.js"></script>
-    <script src="lib/screw.matchers.js"></script>
-    <script src="lib/screw.events.js"></script>
-    <script src="lib/screw.behaviors.js"></script>
-    <script src="lib/screw.mock.js"></script>
+    <script type="text/javascript" src="lib/jquery-1.2.3.js"></script>
+    <script type="text/javascript" src="lib/jquery.fn.js"></script>
+    <script type="text/javascript" src="lib/jquery.print.js"></script>
+    <script type="text/javascript" src="lib/screw.builder.js"></script>
+    <script type="text/javascript" src="lib/screw.matchers.js"></script>
+    <script type="text/javascript" src="lib/screw.events.js"></script>
+    <script type="text/javascript" src="lib/screw.behaviors.js"></script>
+    <script type="text/javascript" src="lib/screw.mock.js"></script>
+    <script type="text/javascript" src="lib/screw.stub.js"></script>
+    <script type="text/javascript" src="lib/screw.prototype.js"></script>
+    
     <link rel="stylesheet" href="lib/screw.css">
     
     <script type="text/javascript">
@@ -48,10 +51,10 @@
       Screw.Unit(function() {
         // Tests are organized into 'describes' and 'its', following the style of RSpec.
         describe("foo.number", function() {
+          // you can scope variables to a specific describe block
           // this [before] function is run before every test
           before(function() {
-            // restore all objects that were mocked to their original states;
-            TH.Mock.reset();
+            
           });
           
           it("returns 2", function() {
@@ -65,7 +68,7 @@
           });
           it("is not even when it returns 3", function() {
             // And here is both a mock and the to_not version of the custom matcher
-            TH.Mock.obj("foo", { number: 3 });
+            Screw.Stub.stub(foo, 'number').andReturn(3);
             expect(foo.number).to_not(be_even);
           });
           

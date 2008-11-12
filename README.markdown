@@ -1,3 +1,64 @@
+# What it is
+
+![Test Runner](http://s3.amazonaws.com/assets.pivotallabs.com/87/original/runner.png)
+
+An rspec style testing framework for javascript
+
+The testing language is closure-based. Consider,
+
+    describe("Matchers", function() {
+      it("invokes the provided matcher on a call to expect", function() {
+        expect(true).to(equal, true);
+        expect(true).to_not(equal, false);
+      });
+    });
+
+A key feature of Screw.Unit are nested `describes` and the cascading `before` (and `after`) behavior that entails:
+
+    describe("a nested describe", function() {
+      var invocations = [];
+      
+      before(function() {
+        invocations.push("before");
+      });
+
+      describe("a doubly nested describe", function() {
+        before(function() {
+          invocations.push('inner before');
+        });
+
+        it("runs befores in all ancestors prior to an it", function() {
+          expect(invocations).to(equal, ["before", "inner before"]);
+        });
+      });
+    });
+
+# Stubbing
+* Rspec style stubbing framework
+
+This stubbing framework replaces the TH.Mock framework
+
+[http://trottercashion.com/2008/10/1/mocking-screw-unit-part-deux](TrotterCashion.com)
+
+
+# Mocking
+
+* insert DOM mocks for each test
+* Mock out Prototype.js AJAX calls using a simple interface
+
+Docs online at:  [http://toppingdesign.com/mock_docs/](http://toppingdesign.com/mock_docs/)
+    
+Examples:
+        // DOM mocking
+        Screw.Mock.insertDom("some_mock"); // will insert dom_mocks/some_mock.html into <div id="dom_test"></div>
+        
+
+Screw.Unit is a Behavior-Driven Testing Framework for Javascript. It features nested describes. Its goals are to provide:
+
+* a DSL for elegant, readable, organized specs;
+* an interactive runner that can execute focused specs and describes; 
+* and brief, extensible source-code.
+
 # Skipping Tests:
 
 * Skipped has a separate status counter at the top of the page, a new display color, and a reason can be printed to the page.
@@ -55,77 +116,9 @@ Examples:
               expect(x).to(be_false);
             });
           });
-        })
-
-
-# Mocking
-
-* Mock out objects (and have them restored at the next test)
-* insert DOM mocks for each test
-* Mock out Prototype.js AJAX calls using a simple interface
-* JSDoc Toolkit docs (in /mock_docs/index.html)
-
-Docs online at:  [http://toppingdesign.com/mock_docs/](http://toppingdesign.com/mock_docs/)
-    
-Examples:
-        // DOM mocking
-        TH.insertDomMock("some_mock"); // will insert dom_mocks/some_mock.html into <div id="dom_test"></div>
-        
-        // Object mocking
-        var someObj = {
-            foo: function () { return 'bar' }
-        };
-        someObj.foo() == 'bar';
-        TH.Mock.Obj("someObj", {
-            foo: function () { return 'somethingElse' }
-        });
-        someObj.foo() == 'somethingElse'; // BUT!  Only for this test the next test will have a normal someObj;
-        
-        // Ajax mocking (Prototype.js only)
-        TH.Ajax.mock("/a_url", "someText", 200);
-        var ajx = new Ajax.Request("/a_url", {
-            onComplete: function (resp) { response = resp }
-        });
-        expect(response.responseText).to(equal, "someText");
-
-Screw.Unit is a Behavior-Driven Testing Framework for Javascript. It features nested describes. Its goals are to provide:
-
-* a DSL for elegant, readable, organized specs;
-* an interactive runner that can execute focused specs and describes; 
-* and brief, extensible source-code.
-
-# What it is
-
-![Test Runner](http://s3.amazonaws.com/assets.pivotallabs.com/87/original/runner.png)
-
-The testing language is closure-based. Consider,
-
-    describe("Matchers", function() {
-      it("invokes the provided matcher on a call to expect", function() {
-        expect(true).to(equal, true);
-        expect(true).to_not(equal, false);
-      });
-    });
-
-A key feature of Screw.Unit are nested `describes` and the cascading `before` (and `after`) behavior that entails:
-
-    describe("a nested describe", function() {
-      var invocations = [];
-      
-      before(function() {
-        invocations.push("before");
-      });
-
-      describe("a doubly nested describe", function() {
-        before(function() {
-          invocations.push('inner before');
         });
 
-        it("runs befores in all ancestors prior to an it", function() {
-          expect(invocations).to(equal, ["before", "inner before"]);
-        });
-      });
-    });
+
 
 # The Runner
 
