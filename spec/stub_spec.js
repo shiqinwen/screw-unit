@@ -18,6 +18,12 @@ Screw.Unit(function() {
                 expect(obj.pizza()).to(equal, ret);
             });
 
+            it("stubs next to stubs", function() {
+                Screw.Stub.stub(obj, "pizza").andReturn("cheese");
+                Screw.Stub.stub(obj, "soda").andReturn("coke");
+                expect(obj.pizza()).to(equal, "cheese");
+            });
+
             it("stubs over stubs", function() {
                 Screw.Stub.stub(obj, "pizza").andReturn("cheese");
                 Screw.Stub.stub(obj, "pizza").andReturn("sausage");
