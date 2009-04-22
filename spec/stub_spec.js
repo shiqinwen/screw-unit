@@ -43,6 +43,42 @@ Screw.Unit(function() {
                 Screw.Stub.reset();
                 expect(obj.pizza()).to(equal, expected);
             });
+
+            describe("with a stub implementation", function() {
+                it("calls the stub implementation", function() {
+                    var called = false;
+                    Screw.Stub.stub(obj, "pizza").as(function() {
+                        called = true;
+                    });
+                    obj.pizza();
+                    expect(called).to(be_true);
+                });
+
+                it("returns the return value of the stub implementation", function() {
+                    Screw.Stub.stub(obj, "pizza").as(function() {
+                        return "cheese";
+                    });
+                    expect(obj.pizza()).to(equal, "cheese");
+                });
+
+                it("passes arguments to the stub implementation", function() {
+                    var args;
+                    Screw.Stub.stub(obj, "pizza").as(function() {
+                        args = arguments;
+                    });
+                    obj.pizza("really", "really", "tasty");
+                    expect(args).to(equal, ["really", "really", "tasty"]);
+                });
+
+                it("calls the stub implementation with the correct receiver", function() {
+                    var receiver;
+                    Screw.Stub.stub(obj, "pizza").as(function() {
+                        receiver = this;
+                    });
+                    obj.pizza();
+                    expect(receiver).to(equal, obj);
+                });
+            });
         });
 
         describe(".shouldReceive", function() {
