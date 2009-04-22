@@ -78,6 +78,14 @@ Screw.Unit(function() {
                     obj.pizza();
                     expect(receiver).to(equal, obj);
                 });
+
+                it("works on constructors", function() {
+                    Screw.Stub.stub(window, "Pizza").as(function(topping) {
+                        this.topping = topping;
+                    });
+                    
+                    expect(new Pizza("pepperoni").topping).to(equal, "pepperoni");
+                });
             });
         });
 
