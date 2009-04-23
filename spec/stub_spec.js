@@ -118,7 +118,13 @@ Screw.Unit(function() {
                 expect(obj.pizza("cheese")).to(equal, "yummy");
                 expect(obj.pizza.validate).to_not(raise);
             });
-            
+
+            it("should match null and undefined arguments", function() {
+                Screw.Stub.shouldReceive(obj, "pizza").withArguments(null, undefined, "pineapple");
+                obj.pizza(null, undefined, "pineapple");
+                expect(obj.pizza.validate).to_not(raise);
+            });
+
             it("should match arguments using matchers", function() {
                 Screw.Stub.shouldReceive(obj, "pizza").withArguments(argWhichWill(match, /sausage/));
                 obj.pizza("turkey sausage");
