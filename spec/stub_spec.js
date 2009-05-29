@@ -119,9 +119,11 @@ Screw.Unit(function() {
                 expect(obj.pizza.validate).to_not(raise);
             });
 
-            it("should match null and undefined arguments", function() {
-                Screw.Stub.shouldReceive(obj, "pizza").withArguments(null, undefined, "pineapple");
-                obj.pizza(null, undefined, "pineapple");
+            it("should correctly match null values in specified argument list", function() {
+                obj.pizza = function() { return "gross" };
+                Screw.Stub.shouldReceive(obj, "pizza").withArguments(null, "cheese").andReturn("null yummy");
+                expect(obj.pizza()).to(equal, "gross");
+                expect(obj.pizza(null, "cheese")).to(equal, "null yummy");
                 expect(obj.pizza.validate).to_not(raise);
             });
 
