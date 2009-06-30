@@ -102,6 +102,17 @@ Screw.Unit(function() {
                 Screw.Stub.reset();
                 expect(obj.pizza()).to(equal, expected);
             });
+
+            it("should call original method with arguments if stub is not matched", function() {
+              var originalMethodCalled = false;
+              obj = { methodToStub: function(a) {
+                        originalMethodCalled = true;
+                        expect(a).to(equal, 'foo'); } };
+              Screw.Stub.shouldReceive(obj, 'methodToStub').withArguments('bar');
+              obj.methodToStub('foo');
+              obj.methodToStub('bar');
+              expect(originalMethodCalled).to(be_true);
+            });
         });
     });
 });
