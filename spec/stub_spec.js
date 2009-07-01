@@ -163,16 +163,6 @@ Screw.Unit(function() {
               obj.methodToStub('bar');
               expect(originalMethodCalled).to(be_true);
             });
-
-            it("shouldn't loose track of return values when additional stubs are introduced", function() {
-              obj = { firstMethod: function() {},
-                      secondMethod: function() {} };
-              Screw.Stub.shouldReceive(obj, 'firstMethod').withArguments('foo').andReturn('bar');
-              Screw.Stub.shouldReceive(obj, 'secondMethod').withArguments('not', 'foo');
-
-              expect(obj.firstMethod('foo')).to(equal, 'bar');
-              obj.secondMethod('not', 'foo');
-            });
         });
     });
 });
