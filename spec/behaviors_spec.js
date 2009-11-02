@@ -160,16 +160,16 @@ Screw.Unit(function() {
     describe("#selector", function() {
       describe('a [describe]', function() {
         it('manufactures a CSS selector that uniquely locates the [describe]', function() {
-          $('.describe').each(function() {
-            expect($($(this).fn('selector')).get(0)).to(equal, $(this).get(0))
+          jQuery('.describe').each(function() {
+            expect(jQuery(jQuery(this).fn('selector')).get(0)).to(equal, jQuery(this).get(0))
           });
         });
       });
 
       describe('an [it]', function() {
         it('manufactures a CSS selector that uniquely locates the [it]', function() {
-          $('.it').each(function() {
-            expect($($(this).fn('selector')).get(0)).to(equal, $(this).get(0))
+          jQuery('.it').each(function() {
+            expect(jQuery(jQuery(this).fn('selector')).get(0)).to(equal, jQuery(this).get(0))
           });
         });
       });

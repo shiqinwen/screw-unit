@@ -190,7 +190,7 @@ Screw.Unit(function() {
     describe('#match_selector', function() {
       var elt;
       before(function() {
-        elt = $("<div class='foo'></div>");
+        elt = jQuery("<div class='foo'></div>");
       });
 
       it("matches a jQuery element against the expected selector", function() {
@@ -213,7 +213,7 @@ Screw.Unit(function() {
     describe('#contain_selector', function() {
       var elt;
       before(function() {
-        elt = $("<div><div class='foo'></div></div>");
+        elt = jQuery("<div><div class='foo'></div></div>");
       });
 
       it("matches a jQuery element against the expected selector", function() {
