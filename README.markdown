@@ -38,10 +38,20 @@ A key feature of Screw.Unit are nested `describes` and the cascading `before` (a
 
 This stubbing framework replaces the TH.Mock framework
 
-[http://trottercashion.com/2008/10/1/mocking-screw-unit-part-deux](TrotterCashion.com)
+[http://trottercashion.com/2008/10/1/mocking-screw-unit-part-deux](TrotterCashion.com)\
+
+    user = {login: 'bob'};
+    Screw.Stub.stub(user, 'login').andReturn('nancy');
+    user.login; // => 'nancy'
+    Screw.Stub.reset(); // Called automatically after each spec
+    user.login; // => 'bob'
+    
+    // Will throw a spec failure if user.email() is never called.
+    Screw.stub.shouldReceive(user, 'email');
 
 
-# Mocking
+
+# DOM Mocking
 
 * insert DOM mocks for each test
 * Mock out Prototype.js AJAX calls using a simple interface
@@ -51,13 +61,6 @@ Docs online at:  [http://toppingdesign.com/mock_docs/](http://toppingdesign.com/
 Examples:
         // DOM mocking
         Screw.Mock.insertDom("some_mock"); // will insert dom_mocks/some_mock.html into <div id="dom_test"></div>
-        
-
-Screw.Unit is a Behavior-Driven Testing Framework for Javascript. It features nested describes. Its goals are to provide:
-
-* a DSL for elegant, readable, organized specs;
-* an interactive runner that can execute focused specs and describes; 
-* and brief, extensible source-code.
 
 # Skipping Tests:
 
